@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>个人中心</title>
+  <link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="__PUBLIC__/css/usercenter.css"/> 
+ </head>
+ <body>
+  <!-- header -->
+  <!-- nav -->
+  <!-- <script src="__PUBLIC__/js/header.js"></script> -->
+  <include file="Public/tpl/header.html" />
+  <!-- section -->
+  <div id="section">
+    <div>
+      <div class='sec_top'>
+        <ul>
+          <li><a href="index.html">首页</a>&nbsp; </li>
+          <li>&nbsp;><a href="usercenter.html">&nbsp;个人中心</a>&nbsp;</li>
+          <li class='change'>> 我的购物车</li>  
+        </ul>
+      </div>
+      <div class='sec_bottom'>
+        <ul class="lf">
+          <li>
+            <i><img src="__PUBLIC__/images/user.png"/></i>&nbsp;&nbsp;<a href="JavaScript:;"  class='col ai'><h2>个人中心</h2></a>
+            <ul>
+              <li><a href="JavaScript:;">收货地址管理</a></li>
+              <li><a href="JavaScript:;" class='col'>我的购物车</a></li>
+              <li><a href="JavaScript:;">我的代金券</a></li>
+              <li><a href="JavaScript:;">我的预约</a></li>
+            </ul>
+          </li>
+          <li><i><img src="__PUBLIC__/images/dingdan.png"/></i>&nbsp;&nbsp;<h2>我的礼品</h2></li>
+          <li><i><img src="__PUBLIC__/images/Sma.png"/></i>&nbsp;&nbsp;<h2>S码购机通道</h2></li>
+          <li>
+            <i><img src="__PUBLIC__/images/setting.png"/></i>&nbsp;&nbsp;<h2>账号管理</h2>
+            <ul>
+              <li><a href="JavaScript:;">个人资料</a></li>
+              <li><a href="JavaScript:;">密码修改</a></li>
+              <li><a href="JavaScript:;">账号绑定</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div class='lf'>
+          <div class='usercenter'>
+            <div class='usercenter_top'>
+              <img src="__PUBLIC__/images/touxiang.png" class='lf'/>
+              <div class='lf'>
+                <h1></h1>
+                登录手机：{$uname|substr=0,3}****{$uname|substr=7}<span class="you"></span> <a href="JavaScript:;">更改</a><br />
+                登录邮箱： 未设置邮箱 <a href="JavaScript:;">去设置</a>
+              </div>
+              <div class="rt">
+                <a href="JavaScript:;">我的收货地址</a><br /><br />
+                <a href="JavaScript:;">我的代金券</a>
+              </div>
+            </div>
+            <div class='usercenter_bottom'>
+              <ul>
+                <li><i></i>&nbsp;&nbsp;&nbsp;&nbsp;待付款: <b class="pay">0</b> </li>
+                <li><i></i>&nbsp;&nbsp;&nbsp;&nbsp;待收货: <b class="get">0</b> </li>
+                <li><i></i>&nbsp;&nbsp;&nbsp;&nbsp;已收货</li>
+              </ul>
+            </div>
+          </div>
+          <div class="address">
+            <!-- <h1>收货地址管理</h1><br />
+            <a href="JavaScript:;"> + 新增收货地址</a> -->
+            <table>
+              <thead>
+                <tr>
+                  <th>收货人</th>
+                  <th>所在地区</th>
+                  <th>详细地址</th>
+                  <th>邮编</th>
+                  <th>电话</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div class="myForm">
+            <h1>我的购物车</h1><br />
+            <ul>
+              <li><a href="JavaScript:;">全部订单</a></li>
+              <li><a href="JavaScript:;" class='col'><b>待付款</b></a></li>
+              <li><a href="JavaScript:;">待收货</a></li>
+              <li><a href="JavaScript:;">已收货</a></li>
+            </ul><br /><br />
+            <table id="cart">
+              <thead>
+                <tr>
+                  <th>商品图片</th>
+                  <th>商品信息</th>
+                  <th>单价(元)</th>
+                  <th>数量</th>
+                  <th>实付款(元)</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <if condition='$arr'>
+                  <volist name="arr" id="vo">
+                    <tr>
+                      <td><img src="__PUBLIC__/{$vo.pic}"></td>
+                      <td>{$vo.pname}</td>
+                      <td>￥{$vo.price}</td>
+                      <td>{$vo.count}</td>
+                      <td><span>￥{$vo['price']*$vo['count']}</span></td>
+                      <td>
+                        <a class='del' href="{$vo.did}">删除</a>
+                      </td>
+                    </tr> 
+                  </volist>
+                <else/>
+                  <th style='font-size:25px;' colspan='6'>您的购物车没有任何商品!</th> 
+                </if>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- footer -->
+  <!-- down -->
+  <!-- <script src="__PUBLIC__/js/footer.js"></script> -->
+  <include file="Public/tpl/footer.html" />
+  <script src="__PUBLIC__/js/usercenter.js"></script>
+ </body>
+</html>
+ 

@@ -1,0 +1,95 @@
+#banner{
+  width:100%;
+  min-width:1200px;
+  height:650px;
+  background:url(../images/bf_header.jpg) no-repeat 50% 0;
+  position:relative;
+}
+#banner:before{
+  content:"";
+  display:table;
+}
+#banner:after{
+  content:"";
+  display:table;
+  clear:both;
+}
+#banner>div{
+  position:absolute;
+  top:168px;
+  left:50%;
+}
+#banner>div:first-child{
+  -webkit-animation:img 4s linear infinite;
+          animation:img 4s linear infinite;
+  background:url(../images/bf_camera_1.png) no-repeat;
+  width:361px;
+  height:298px;
+  margin-left:-142px;
+}
+#banner>div:last-child{
+  -webkit-animation:img 5s linear infinite;
+          animation:img 5s linear infinite;
+  background:url(../images/bf_camera_2.png) no-repeat;
+  width:327px;
+  height:272px;
+  margin-left:238px;
+} 
+@-webkit-keyframes img{
+  0%{
+    -webkit-transform:translateY(-6px);
+            transform:translateY(-6px);
+  }
+  50%{
+    -webkit-transform:translateY(6px);
+            transform:translateY(6px);
+  }
+  100%{
+    -webkit-transform:translateY(-6px);
+            transform:translateY(-6px);
+  }
+} 
+@keyframes img{
+  0%{
+    -webkit-transform:translateY(-6px);
+            transform:translateY(-6px);
+  }
+  50%{
+    -webkit-transform:translateY(6px);
+            transform:translateY(6px);
+  }
+  100%{
+    -webkit-transform:translateY(-6px);
+            transform:translateY(-6px);
+  }
+}
+/*==========================section========================*/
+#section{
+  width:100%;
+  min-width:1200px;
+  text-align:center;
+}
+#section:before{
+  content:"";
+  display:table;
+}
+#section:after{
+  content:"";
+  display:table;
+  clear:both;
+}
+#section>div{
+  width:1200px;
+  margin:0 auto;
+}
+#section>div>h1{
+  font-size:35px;
+  margin-top:40px;
+  font-weight:normal;
+  color:#4A4A4A;
+}
+#section>div>img{
+  margin:10px;
+  float:left;
+  cursor:pointer;
+}

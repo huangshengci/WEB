@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>购物车</title>
+  <link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="__PUBLIC__/css/buycar.css" />
+ </head>
+ <body>
+  <!-- header -->
+  <!-- nav -->
+  <!-- <script src="__PUBLIC__/js/header.js"></script> -->
+  <include file="Public/tpl/header.html" />
+  <!-- section -->
+  <input type="hidden" value='{$uname}' id='loginName'/>
+  <div id="section">
+    <div>
+      <div class='sec_top'>
+        <ul>
+          <li><a href="__ROOT__/Buycar/buycar">首页</a>&nbsp; </li>
+          <li>&nbsp;><a href="#">&nbsp;&nbsp;配件</a>&nbsp;</li>
+        </ul>
+      </div>
+      <div class="sec_middle" id='plist'>
+        <ul>
+          <!-- <li>
+            <img src="images/57a9a8cf86cb727541.jpg!thumb220.jpg"/>
+            <h4>气球恐龙绿帽子</h4>
+            <h3>￥188</h3>
+            <a href="#"><img src="images/pinkcar.png"/></a>
+          </li> -->
+          <volist name="product" id="vo">
+            <li>
+              <img src="__PUBLIC__/{$vo.pic}"/>
+              <h4>{$vo.pname}</h4>
+              <h3>￥{$vo.price}</h3>
+              <a href="{$vo.pid}" class='addcart'><img src="__PUBLIC__/images/pinkcar.png"/></a>
+            </li>
+          </volist>
+        </ul>
+        <ol class="pager">
+          {$pageList}
+          <!--
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li class="active"><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            -->
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- footer -->
+  <!-- down -->
+  <!-- article -->
+  <div class="zhe">
+    <div></div>
+    <div>
+      <h2></h2>
+      <span>&times;</span>
+    </div>
+  </div>
+  <!-- <script src="__PUBLIC__/js/footer.js"></script> -->
+  <include file="Public/tpl/footer.html" />
+  <script src="__PUBLIC__/js/buycar.js"></script>
+ </body>
+</html>
