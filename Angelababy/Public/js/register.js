@@ -1,136 +1,3 @@
-//黑洞
-(function(){
-var w_w=window.innerWidth,//获取页面宽度
-  w_h=window.innerHeight,//获取页面高度
-  centerX=w_w/2,
-  centerY=w_h/2,
-  target=document.getElementsByTagName("div")[0],
-  comets=[],
-  min_radius=125,
-  max_radius=250,
-  ifHover=false,
-  ifClick=false,
-  change=false;
-
-  target.style.height=window.getComputedStyle(target,null).width;
-  target.style.marginLeft=-parseInt(target.style.height)/2+"px";
-  target.style.marginTop=-parseInt(target.style.height)/2+"px";
-  target.style.lineHeight=target.style.height;
-
-  var canvas=document.getElementById("cvs");
-  cvs.width=w_w;
-  cvs.height=w_h;
-  cvs.setAttribute("width",w_w+"px");
-  cvs.setAttribute("height",w_h+"px");
-  cvs.setAttribute("backgroundColor","#fff");
-
-  var ctx=canvas.getContext("2d");
-
-
-function random(min,max){
-  return min+(max-min)*Math.random();
-}
-
-function comet(){
-  comets.push(this);
-  this.speed=(Math.floor(Math.random() * 1.5) + 0.5)*Math.PI/180;
-  this.rotation=Math.random()*Math.PI*2;
-  this.y=this.origin=(random(min_radius,max_radius)+random(min_radius,max_radius))/2;
-  this.x=0;
-
-  this.collapseBonus = this.origin - 180; 
-  if(this.collapseBonus < 0){ 
-    this.collapseBonus = 0; 
-  }
-  this.shrinkRadius=max_radius/2 + this.collapseBonus;
-  this.expandRadius=random(-window.innerHeight,-min_radius);
-  this.color = 'rgba(254,65,114,'+ Math.abs(1 - (this.origin) / 250) +')';//初始中心颜色
- }
-
-comet.prototype.draw=function (){
-  this.rotation+=this.speed;
-  
-  if(ifHover){
-    if(this.y>this.shrinkRadius) this.y-=2.5;
-    if(this.y<this.shrinkRadius) this.y+=2.5;
-  }
-  else if(ifClick){
-    if(this.y>this.expandRadius) this.y-=4;
-
-  }
-  else{
-    if(this.y>this.origin) this.y-=2;
-    if(this.y<this.origin) this.y+=2;
-  }
-  
-  ctx.save();
-  if(ifClick){ctx.fillStyle="rgba(254,65,114,.6)";}//爆炸颜色
-  else
-  ctx.fillStyle=this.color;
-  ctx.translate(centerX,centerY);
-  ctx.rotate(this.rotation);
-  ctx.fillRect(this.x,this.y,1,1);
-  ctx.restore();
-};
-
-target.addEventListener("click",function(){if(change) {
-    ifClick=false;
-  }
-  else{
-    ifClick=true;
-  }
-  change=!change;});
-  
-
-
-target.addEventListener("mouseover",function(){
-  ifHover=true;
-});
-
-target.addEventListener("mouseout",function(){
-  
-  ifHover=false;
-  
-});
-
-function animate(){
-  ctx.fillStyle="rgba(255,255,255,.1)";//背景颜色
-  ctx.fillRect(0,0,w_w,w_h);
-  comets.forEach(function(element,index,group){
-    element.draw();
-  });
-  requestFrame(animate);
-}
-
-window.requestFrame = (function(){
-  return  window.requestAnimationFrame||
-    window.webkitRequestAnimationFrame||
-    window.mozRequestAnimationFrame||
-    function( callback ){
-    window.setTimeout(callback, 1000 / 60);
-  };
-})();
-
-
-function initial(){
-  ctx.fillStyle="rgba(25,25,25,1)";
-  ctx.fillRect(0,0,w_w,w_h);
-  for(var i=0;i<2500;i++){
-    new comet();
-  }
-
-  animate();
-}
-
-initial();
-})()
-
-
-
-
-
-
-
 //随机数
 function rn(max,min){
   return Math.floor(Math.random()*(max-min+1)+min);
@@ -148,7 +15,7 @@ function rc(max,min){
 function vcode(){
   num='';
   var str='AaBbCcDdEeFfGgHhJjKkLlMmNnPpQqRrSsTtWwXxYy3456789';
-  //var char=str[ 0~字符串长度间的随机数 ];  
+  //var char=str[ 0~字符串长度间的随机数 ];
   var ctx=canvas.getContext('2d');
   ctx.fillStyle=rc(256,200);
   ctx.strokeRect(0,0,150,50);
@@ -161,7 +28,7 @@ function vcode(){
     var tex=str[rn(48,0)];
     num+=tex;
     var zhuan=rn(7,-7);
-    //console.log(zhuan); 
+    //console.log(zhuan);
     ctx.rotate(zhuan*Math.PI/180);
     ctx.fillText(tex,20*i+5,25);
     ctx.rotate(-zhuan*Math.PI/180);
@@ -193,22 +60,34 @@ var upwd1_value=null;
 
 /*注册验证*/
 $('#uname').blur(function(){
-  if(/^1[3-9]\d{9}$/.test($(this)[0].value)){
-    $(this).siblings('b').css('display','none');
-    uname_value=true;
-    return uname_value;
-  }else if($(this)[0].value===""){
+  if(/^1[3-9]\d{9}$/.test($(this).val())){
+    var $this = $(this);
+    $.ajax({
+      type: 'POST',
+      url: '/Angelababy/register/checked',
+      data: {'uname':$(this).val()},
+      success: function(data){
+        if(data=='ok'){
+          $this.siblings('b').css('display','inline-block').html('该用户名已被使用');
+        }else{
+          $this.siblings('b').css('display','none');
+          uname_value=true;
+          return uname_value;
+        }
+      }
+    });
+  }else if($(this).val()===""){
     $(this).siblings('b').css('display','inline-block').html("手机号不能为空");//
   }else{
     $(this).siblings('b').css('display','inline-block').html("手机号格式错误");
   }
 });
 $('#code').blur(function(){
-  if($(this)[0].value==num){
+  if($(this).val().toUpperCase==num.toUpperCase){
     $(this).siblings('b').css('display','none');
     code_value=true;
     return code_value;
-  }else if($(this)[0].value===""){
+  }else if($(this).val()===""){
     $(this).siblings('b').css('display','inline-block').html("验证码不能为空");
   }else{
     $(this).siblings('b').css('display','inline-block').html("验证码错误");
@@ -216,22 +95,22 @@ $('#code').blur(function(){
   }
 });
 $('#upwd').blur(function(){
-  if(/^[0-9a-zA-Z]{6,12}$/.test($(this)[0].value)){
+  if(/^[0-9a-zA-Z]{6,12}$/.test($(this).val())){
     $(this).siblings('b').css('display','none');
     upwd_value=true;
     return upwd_value;
-  }else if($(this)[0].value===""){
+  }else if($(this).val()===""){
     $(this).siblings('b').css('display','inline-block').html("密码不能为空");
   }else{
     $(this).siblings('b').css('display','inline-block').html("密码格式错误");
   }
 });
 $('#upwd1').blur(function(){
-  if($(this)[0].value===$('#upwd')[0].value){
+  if($(this).val()===$('#upwd')[0].value){
     $(this).siblings('b').css('display','none');
     upwd1_value=true;
     return upwd1_value;
-  }else if($(this)[0].value===""){
+  }else if($(this).val()===""){
     $(this).siblings('b').css('display','inline-block').html("密码不能为空");
   }else{
     $(this).siblings('b').css('display','inline-block').html("两次密码不一致");
@@ -250,14 +129,12 @@ $('#btn').click(function(){
     console.log(data);
     $.ajax({
       type: 'POST',
-      url: 'php/register.php',
+      url: '/Angelababy/register/zhuce',
       data: data,
-      success: function(result){
-        console.log('开始处理服务器端返回的注册结果')
-        console.log(result);
-        if(result.msg=='succ'){
+      success: function(data){
+        if(data=='ok'){
           alert('注册成功！');
-          location.href='login.html';
+          window.location.href='/Angelababy/login/login';
         }else {
           alert('注册失败！')
         }
@@ -270,6 +147,135 @@ $('#btn').click(function(){
 
 $(".zhe>div:last-child>button").click(
   function(){
-    $(".zhe").css("display","none");  
+    $(".zhe").css("display","none");
   }
 );
+
+
+
+//黑洞
+(function(){
+  var w_w=window.innerWidth,//获取页面宽度
+    w_h=window.innerHeight,//获取页面高度
+    centerX=w_w/2,
+    centerY=w_h/2,
+    target=document.getElementsByTagName("div")[0],
+    comets=[],
+    min_radius=125,
+    max_radius=250,
+    ifHover=false,
+    ifClick=false,
+    change=false;
+
+    target.style.height=window.getComputedStyle(target,null).width;
+    target.style.marginLeft=-parseInt(target.style.height)/2+"px";
+    target.style.marginTop=-parseInt(target.style.height)/2+"px";
+    target.style.lineHeight=target.style.height;
+
+    var canvas=document.getElementById("cvs");
+    cvs.width=w_w;
+    cvs.height=w_h;
+    cvs.setAttribute("width",w_w+"px");
+    cvs.setAttribute("height",w_h+"px");
+    cvs.setAttribute("backgroundColor","#fff");
+
+    var ctx=canvas.getContext("2d");
+
+
+  function random(min,max){
+    return min+(max-min)*Math.random();
+  }
+
+  function comet(){
+    comets.push(this);
+    this.speed=(Math.floor(Math.random() * 1.5) + 0.5)*Math.PI/180;
+    this.rotation=Math.random()*Math.PI*2;
+    this.y=this.origin=(random(min_radius,max_radius)+random(min_radius,max_radius))/2;
+    this.x=0;
+
+    this.collapseBonus = this.origin - 180;
+    if(this.collapseBonus < 0){
+      this.collapseBonus = 0;
+    }
+    this.shrinkRadius=max_radius/2 + this.collapseBonus;
+    this.expandRadius=random(-window.innerHeight,-min_radius);
+    this.color = 'rgba(254,65,114,'+ Math.abs(1 - (this.origin) / 250) +')';//初始中心颜色
+   }
+
+  comet.prototype.draw=function (){
+    this.rotation+=this.speed;
+
+    if(ifHover){
+      if(this.y>this.shrinkRadius) this.y-=2.5;
+      if(this.y<this.shrinkRadius) this.y+=2.5;
+    }
+    else if(ifClick){
+      if(this.y>this.expandRadius) this.y-=4;
+
+    }
+    else{
+      if(this.y>this.origin) this.y-=2;
+      if(this.y<this.origin) this.y+=2;
+    }
+
+    ctx.save();
+    if(ifClick){ctx.fillStyle="rgba(254,65,114,.6)";}//爆炸颜色
+    else
+    ctx.fillStyle=this.color;
+    ctx.translate(centerX,centerY);
+    ctx.rotate(this.rotation);
+    ctx.fillRect(this.x,this.y,1,1);
+    ctx.restore();
+  };
+
+  target.addEventListener("click",function(){if(change) {
+      ifClick=false;
+    }
+    else{
+      ifClick=true;
+    }
+    change=!change;});
+
+
+
+  target.addEventListener("mouseover",function(){
+    ifHover=true;
+  });
+
+  target.addEventListener("mouseout",function(){
+
+    ifHover=false;
+
+  });
+
+  function animate(){
+    ctx.fillStyle="rgba(255,255,255,.1)";//背景颜色
+    ctx.fillRect(0,0,w_w,w_h);
+    comets.forEach(function(element,index,group){
+      element.draw();
+    });
+    requestFrame(animate);
+  }
+
+  window.requestFrame = (function(){
+    return  window.requestAnimationFrame||
+      window.webkitRequestAnimationFrame||
+      window.mozRequestAnimationFrame||
+      function( callback ){
+      window.setTimeout(callback, 1000 / 60);
+    };
+  })();
+
+
+  function initial(){
+    ctx.fillStyle="rgba(25,25,25,1)";
+    ctx.fillRect(0,0,w_w,w_h);
+    for(var i=0;i<2500;i++){
+      new comet();
+    }
+
+    animate();
+  }
+
+  initial();
+})()

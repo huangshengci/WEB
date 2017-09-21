@@ -1,9 +1,9 @@
 <?php
 return array(
 	'DB_TYPE'=>'mysql',
-  'DB_HOST'=>'120.27.35.99',
-  'DB_NAME'=>'qdm106205409_db',
-  'DB_USER'=>'qdm106205409',
-  'DB_PWD'=>'hscteach',
+  'DB_HOST'=>'localhost',
+  'DB_NAME'=>'meitu',
+  'DB_USER'=>'root',
+  'DB_PWD'=>'root',
   'DB_PREFIX'=>'meitu_'
 );

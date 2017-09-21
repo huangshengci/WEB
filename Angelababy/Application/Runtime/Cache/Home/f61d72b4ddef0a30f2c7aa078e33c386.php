@@ -20,8 +20,8 @@
       <div class="header_right rt">
 				<ul>
 					<li class="login">
-						<a href="/code/Angelababy/index.php/Home/login/login.html">登录</a>&nbsp; |&nbsp;
-            <a href="/code/Angelababy/index.php/Home/register/register.html">注册</a>
+						<a href="/Angelababy/login/login">登录</a>&nbsp; |&nbsp;
+            <a href="/Angelababy/register/register">注册</a>
 					</li>
 				</ul>
 			</div>
@@ -38,8 +38,8 @@
           <div class="biaodan_middle">
             <ul>
               <li>
-                手机号码&nbsp;&nbsp; 
-								<input type="text" maxlength="11" id="uname" name="u" placeholder="手机号码">
+                手机号码&nbsp;&nbsp;
+								<input type="text" maxlength="11" id="uname" name="uname" placeholder="手机号码">
                 &nbsp;
 								<span>*11位手机号码</span>
 								<b></b>
