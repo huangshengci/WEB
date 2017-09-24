@@ -1,2 +1,2 @@
 <?php
-echo 'hahha';
+echo '312';
